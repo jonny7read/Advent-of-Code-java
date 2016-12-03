@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 public class Task3 {
 
+	private static final int	HORIZONAL	= 0;
+	private static final int	VERTICAL	= 1;
+
 	public static void main(String[] args) {
 		new Task3();
 	}
@@ -17,7 +20,7 @@ public class Task3 {
 	}
 
 	private void run() {
-		ArrayList<int[]> triangles = getInput("Task3Input.txt");
+		ArrayList<int[]> triangles = getInput("Task3Input.txt", this.HORIZONAL);
 		int validTriangles = getValidTriangles(triangles);
 
 		System.out.println("Total triangles: " + triangles.size());
@@ -40,7 +43,7 @@ public class Task3 {
 		return validTriangleCount;
 	}
 
-	private ArrayList<int[]> getInput(String fileName) {
+	private ArrayList<int[]> getInput(String fileName, int direction) {
 		ArrayList<int[]> triangles = new ArrayList<int[]>();
 
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -51,12 +54,17 @@ public class Task3 {
 		try {
 			scanner = new Scanner(file);
 			while (scanner.hasNextLine()) {
-				int[] dimensions = new int[3];
-				for (int i = 0; i < dimensions.length; i++) {
-					dimensions[i] = scanner.nextInt();
+				int[][] triangleGroup = new int[3][3];
+				for (int line = 0; line < triangleGroup.length; line++) {
+					for (int col = 0; col < triangleGroup[line].length; col++) {
+						triangleGroup[col][line] = scanner.nextInt();
+					}
 				}
+
 				scanner.nextLine();
-				triangles.add(dimensions);
+				triangles.add(triangleGroup[0]);
+				triangles.add(triangleGroup[1]);
+				triangles.add(triangleGroup[2]);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
