@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Task4 {
@@ -45,10 +46,49 @@ public class Task4 {
 		ArrayList<String> lines = getInput("Task4Input.txt");
 		ArrayList<String> rooms = processLines(lines);
 
+		finishPart1(rooms);
+		finishPart2(rooms);
+	}
+
+	private void finishPart2(ArrayList<String> rooms) {
+		HashMap<String, String> realNames = new HashMap<String, String>();
+		for (String room : rooms) {
+			int dash = room.lastIndexOf('-');
+			int bracket = room.indexOf('[');
+			int roomId = Integer.parseInt(room.substring(dash + 1, bracket));
+			String roomName = room.substring(0, room.lastIndexOf('-'));
+
+			char[] roomNameArray = roomName.toCharArray();
+			int shift = roomId % 26;
+
+			for (int i = 0; i < roomNameArray.length; i++) {
+				if (roomNameArray[i] == '-') {
+					roomNameArray[i] = ' ';
+				} else {
+					roomNameArray[i] += shift;
+					if (roomNameArray[i] > 'z') {
+						roomNameArray[i] -= 26;
+					}
+				}
+			}
+			realNames.put(String.valueOf(roomNameArray), room);
+		}
+
+		// search the names!
+		for (String name : realNames.keySet()) {
+			if (name.contains("north")) {
+				System.out.println(name);
+				System.out.println(realNames.get(name));
+			}
+		}
+	}
+
+	private void finishPart1(ArrayList<String> rooms) {
+
 		int total = getTotalFromIds(rooms);
 
-		System.out.println(rooms.size());
-		System.out.println("Total: " + total);
+		System.out.println("Rooms: " + rooms.size());
+		System.out.println("Total of Ids: " + total);
 	}
 
 	private int getTotalFromIds(ArrayList<String> rooms) {
