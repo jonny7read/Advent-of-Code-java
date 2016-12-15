@@ -1,10 +1,6 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * In this class I refer to <i>supernet</i> and <i>hypernet</i>, which are terminology defined by
@@ -21,7 +17,7 @@ import java.util.Scanner;
  * @author Jonny Read
  *
  */
-public class Task7 {
+public class Task7 extends InputTask {
 
 	public static void main(String[] args) {
 		new Task7(false);
@@ -83,27 +79,6 @@ public class Task7 {
 		testLines.add("abc[def]ghi"); // not valid - neither
 
 		return testLines;
-	}
-
-	private ArrayList<String> getInput(String fileName) {
-		ClassLoader classLoader = getClass().getClassLoader();
-		URL url = classLoader.getResource(fileName);
-		File file = new File(url.getFile());
-		Scanner scanner = null;
-		ArrayList<String> lines = new ArrayList<String>();
-
-		try {
-			scanner = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-
-		while (scanner.hasNextLine()) {
-			lines.add(scanner.nextLine());
-		}
-
-		return lines;
 	}
 
 	private ArrayList<String> getTLSIPs(ArrayList<String> lines) {

@@ -1,14 +1,10 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Scanner;
 
-public class Task4 {
+public class Task4 extends InputTask {
 
 	public static void main(String[] args) {
 		new Task4();
@@ -157,27 +153,5 @@ public class Task4 {
 			}
 		}
 		return false;
-	}
-
-	private ArrayList<String> getInput(String fileName) {
-		ClassLoader classLoader = getClass().getClassLoader();
-		URL url = classLoader.getResource(fileName);
-		File file = new File(url.getFile());
-		Scanner scanner = null;
-		ArrayList<String> lines = new ArrayList<String>();
-
-		try {
-			scanner = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-
-		while (scanner.hasNextLine()) {
-			lines.add(scanner.nextLine());
-		}
-
-		return lines;
-
 	}
 }
