@@ -14,8 +14,10 @@ public class Task8 extends InputTask {
 	}
 
 	public Task8() {
-		ArrayList<String> input = getInput("Task8Input.txt", 2);
+		ArrayList<String> input = getInput("Task8Input.txt", 5);
+
 		processInput(input);
+
 		int pixelsLeftOn = getNumberOfPixelsOn();
 
 		System.out.println(pixelsLeftOn);
@@ -35,11 +37,19 @@ public class Task8 extends InputTask {
 
 	private void processInput(ArrayList<String> input) {
 		System.out.println("Inital State:");
-		printState();
-		for (String command : input) {
-			System.out.println(command);
-			processCommand(command);
-			printState();
+
+		System.out.println(input.size() + " lines of input");
+		try {
+			for (String command : input) {
+				System.out.println(command);
+				Thread.sleep(1000);
+
+				processCommand(command);
+				printState();
+				Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -50,9 +60,10 @@ public class Task8 extends InputTask {
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 
-	private void processCommand(String command) {
+	private void processCommand(String command) throws InterruptedException {
 		if (command.startsWith("rect")) {
 			int indexOfX = command.indexOf('x');
 			int rectX = Integer.parseInt(command.substring(indexOfX - 1, indexOfX));
@@ -85,14 +96,19 @@ public class Task8 extends InputTask {
 	}
 
 	private void shiftRow(int row, int steps) {
-		for (int i = 0; i < steps; i++) {
-			mPixels[PIXEL_WIDTH - 1][row] = mPixels[0][row];
-			for (int y = 1; y < PIXEL_WIDTH - 1; y++) {
-				mPixels[y + 1][row] = mPixels[y][row];
-				printState();
-				System.out.println();
-			}
+		for (int x = 0; x < PIXEL_WIDTH; x++) {
+			boolean stored;
+			int nextX = x + steps % PIXEL_WIDTH;
+			System.out.println(x + " " + nextX);
+
+			stored = mPixels[nextX][row];
+			mPixels[nextX][row] = mPixels[x][row];
+			mPixels[x][row] = stored;
 		}
+	}
+
+	private void flipPixel(int x, int y) {
+		mPixels[x][y] = !mPixels[x][y];
 	}
 
 	private void shiftCol(int col, int steps) {
