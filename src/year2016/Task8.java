@@ -16,7 +16,7 @@ public class Task8 extends InputTask {
 	}
 
 	public Task8() {
-		ArrayList<String> input = getInput("Task8Input.txt", 5);
+		ArrayList<String> input = getInput("2016Task8Input.txt", 5);
 
 		processInput(input);
 

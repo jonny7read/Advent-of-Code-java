@@ -39,7 +39,7 @@ public class Task7 extends InputTask {
 			System.out.println("TSL IPs (part 1): " + tlsIPs.size());
 			System.out.println("SSL IPs (part 2): " + sslIPs.size());
 		} else {
-			ArrayList<String> lines = getInput("Task7Input.txt");
+			ArrayList<String> lines = getInput("2016Task7Input.txt");
 
 			System.out.println(lines.size() + " lines read from file");
 

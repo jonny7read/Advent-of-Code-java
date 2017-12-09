@@ -41,7 +41,7 @@ public class Task4 extends InputTask {
 	}
 
 	private void run() {
-		ArrayList<String> lines = getInput("Task4Input.txt");
+		ArrayList<String> lines = getInput("2016Task4Input.txt");
 		ArrayList<String> rooms = processLines(lines);
 
 		finishPart1(rooms);

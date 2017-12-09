@@ -11,7 +11,7 @@ public class Task6 extends InputTask {
 	}
 
 	public Task6() {
-		ArrayList<String> input = getInput("Task6Input.txt");
+		ArrayList<String> input = getInput("2016Task6Input.txt");
 		int[][] counts = getLetterCounts(input);
 		String partA = getLetters(counts, 'a');
 		String partB = getLetters(counts, 'b');
