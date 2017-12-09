@@ -23,7 +23,7 @@ public class Task1 extends InputTask {
 	/**
 	 * Main beef of this task. This gets the sum of all valid digits in the list, given the
 	 * appropriate rule.<br>
-	 * The rule is dependant on if this method is run for part 1 or part 2 of the challenge.<br>
+	 * The rule is dependent on if this method is run for part 1 or part 2 of the challenge.<br>
 	 * The part of the challenge is determined by the part parameter.<br>
 	 * In part 1, we sum all digits that are the same as the next digit in the line.<br>
 	 * In part 2, we sum all digits that are the same as the digit that is exactly halfway round the

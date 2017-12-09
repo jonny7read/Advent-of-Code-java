@@ -20,7 +20,7 @@ public class Task2Test {
 	}
 
 	@Test
-	public void test() {
+	public void testPart1() {
 		List<String> input = new ArrayList<String>();
 		input.add("5	1	9	5");
 		input.add("7	5	3");
@@ -29,6 +29,18 @@ public class Task2Test {
 		int totalSum = task2.getTotalSum(input, 1);
 
 		assertEquals(18, totalSum);
+	}
+
+	@Test
+	public void testPart2() {
+		List<String> input = new ArrayList<String>();
+		input.add("5	9	2	8");
+		input.add("9	4	7	3");
+		input.add("3	8	6	5");
+
+		int totalSum = task2.getTotalSum(input, 2);
+
+		assertEquals(9, totalSum);
 	}
 
 }
