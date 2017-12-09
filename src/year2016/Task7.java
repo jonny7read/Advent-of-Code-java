@@ -1,6 +1,8 @@
-package main;
+package year2016;
 
 import java.util.ArrayList;
+
+import utils.InputTask;
 
 /**
  * In this class I refer to <i>supernet</i> and <i>hypernet</i>, which are terminology defined by

@@ -1,4 +1,4 @@
-package main;
+package year2016;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

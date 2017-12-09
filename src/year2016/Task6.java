@@ -1,6 +1,8 @@
-package main;
+package year2016;
 
 import java.util.ArrayList;
+
+import utils.InputTask;
 
 public class Task6 extends InputTask {
 

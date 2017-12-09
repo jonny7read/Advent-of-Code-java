@@ -1,4 +1,4 @@
-package main;
+package year2016;
 
 public class Task2 {
 

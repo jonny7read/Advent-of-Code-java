@@ -1,8 +1,10 @@
-package main;
+package year2016;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import utils.InputTask;
 
 public class Task4 extends InputTask {
 
