@@ -11,26 +11,24 @@ public class Task7 extends InputTask {
 	public static void main(String[] args) {
 		Task7 task = new Task7();
 
-		ArrayList<String> input = task.getInput("2017Task7Input.txt");
+		ArrayList<String> input = task.getInput("2017Task7Input2.txt");
 
 		List<Program> programs = task.parseInput(input);
 
-		Program rootProgram = task.getParent(programs, programs.get(0));
+		int totalWeight = task.getParent(programs, programs.get(0));
 
-		if (rootProgram == null) {
-			System.out.println("no root found - error");
-		} else {
-			System.out.println("Root found: " + rootProgram.name);
-		}
+		System.out.println("Root found: " + totalWeight);
 	}
 
-	private Program getParent(List<Program> programs, Program pet) {
+	private int getParent(List<Program> programs, Program pet) {
 		for (Program program : programs) {
 			if (program.hasPet(pet.name)) {
-				return getParent(programs, program);
+				program.checkPetWeightSame();
+				int petWeight = program.getPetWeight();
+				return petWeight + getParent(programs, program);
 			}
 		}
-		return pet;
+		return 0;
 	}
 
 	private List<Program> parseInput(ArrayList<String> input) {
@@ -51,6 +49,10 @@ public class Task7 extends InputTask {
 		}
 
 		for (Program parent : programs) {
+			if (parent.petNames.size() == 0) {
+				continue;
+			}
+
 			for (Program pet : programs) {
 				if (parent.hasPet(pet.name)) {
 					parent.addPet(pet);
@@ -74,6 +76,29 @@ public class Task7 extends InputTask {
 			this.pets = new ArrayList<Program>();
 		}
 
+		public int getPetWeight() {
+			int total = 0;
+
+			for (Program pet : pets) {
+				total += pet.weight;
+			}
+
+			System.out.println("Pet weight for " + name + " is: " + total);
+
+			return total;
+		}
+
+		public void checkPetWeightSame() {
+			int petWeight = pets.get(0).weight;
+
+			for (Program pet : pets) {
+				if (pet.weight != petWeight) {
+					System.out.println(pet.name + " has an incorrect weight of " + pet.weight + " but should be " + petWeight);
+					break;
+				}
+			}
+		}
+
 		public void addPet(Program pet) {
 			this.pets.add(pet);
 		}
@@ -84,7 +109,7 @@ public class Task7 extends InputTask {
 
 		@Override
 		public String toString() {
-			return "Name: " + name + ", weight: " + weight + ", pets: " + pets;
+			return "Name: " + name + ", weight: " + weight + ", pets: " + petNames;
 		}
 	}
 
