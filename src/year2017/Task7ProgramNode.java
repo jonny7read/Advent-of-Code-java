@@ -9,18 +9,18 @@ import java.util.List;
  * @author jonny
  *
  */
-class ProgramNode {
+class Task7ProgramNode {
 
 	private String name;
 	private int weight;
 	private List<String> petNames;
-	private List<ProgramNode> pets;
+	private List<Task7ProgramNode> pets;
 
-	protected ProgramNode(String name, int weight, List<String> petNames) {
+	protected Task7ProgramNode(String name, int weight, List<String> petNames) {
 		this.name = name;
 		this.weight = weight;
 		this.petNames = petNames;
-		this.pets = new ArrayList<ProgramNode>();
+		this.pets = new ArrayList<Task7ProgramNode>();
 	}
 
 	public String getName() {
@@ -35,14 +35,14 @@ class ProgramNode {
 		return petNames;
 	}
 
-	public List<ProgramNode> getPets() {
+	public List<Task7ProgramNode> getPets() {
 		return pets;
 	}
 
 	public int getPetWeight() {
 		int total = 0;
 
-		for (ProgramNode pet : pets) {
+		for (Task7ProgramNode pet : pets) {
 			total += pet.weight;
 		}
 
@@ -54,7 +54,7 @@ class ProgramNode {
 	public void checkPetWeightSame() {
 		int petWeight = pets.get(0).weight;
 
-		for (ProgramNode pet : pets) {
+		for (Task7ProgramNode pet : pets) {
 			if (pet.weight != petWeight) {
 				System.out.println(pet.name + " has an incorrect weight of " + pet.weight + " but should be " + petWeight);
 				break;
@@ -62,7 +62,7 @@ class ProgramNode {
 		}
 	}
 
-	public void addPet(ProgramNode pet) {
+	public void addPet(Task7ProgramNode pet) {
 		this.pets.add(pet);
 	}
 

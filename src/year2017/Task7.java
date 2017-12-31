@@ -13,15 +13,15 @@ public class Task7 extends InputTask {
 
 		ArrayList<String> input = task.getInput("2017Task7Input2.txt");
 
-		List<ProgramNode> programs = task.parseInput(input);
+		List<Task7ProgramNode> programs = task.parseInput(input);
 
 		int totalWeight = task.getParent(programs, programs.get(0));
 
 		System.out.println("Root found: " + totalWeight);
 	}
 
-	private int getParent(List<ProgramNode> programs, ProgramNode pet) {
-		for (ProgramNode program : programs) {
+	private int getParent(List<Task7ProgramNode> programs, Task7ProgramNode pet) {
+		for (Task7ProgramNode program : programs) {
 			if (program.hasPet(pet.getName())) {
 				program.checkPetWeightSame();
 				int petWeight = program.getPetWeight();
@@ -31,8 +31,8 @@ public class Task7 extends InputTask {
 		return 0;
 	}
 
-	private List<ProgramNode> parseInput(ArrayList<String> input) {
-		List<ProgramNode> programs = new ArrayList<ProgramNode>();
+	private List<Task7ProgramNode> parseInput(ArrayList<String> input) {
+		List<Task7ProgramNode> programs = new ArrayList<Task7ProgramNode>();
 
 		for (String line : input) {
 			String name = line.substring(0, line.indexOf(" "));
@@ -44,16 +44,16 @@ public class Task7 extends InputTask {
 				pets = Arrays.asList(line.substring(petsIndex + 3).split(", "));
 			}
 
-			ProgramNode program = new ProgramNode(name, weight, pets);
+			Task7ProgramNode program = new Task7ProgramNode(name, weight, pets);
 			programs.add(program);
 		}
 
-		for (ProgramNode parent : programs) {
+		for (Task7ProgramNode parent : programs) {
 			if (parent.getPetNames().size() == 0) {
 				continue;
 			}
 
-			for (ProgramNode pet : programs) {
+			for (Task7ProgramNode pet : programs) {
 				if (parent.hasPet(pet.getName())) {
 					parent.addPet(pet);
 				}
