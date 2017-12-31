@@ -3,6 +3,7 @@ package year2017;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -20,29 +21,100 @@ public class Task10 extends InputTask {
 	}
 
 	public void run() throws Exception {
+		StringJoiner output = new StringJoiner("\n");
 		ArrayList<String> input = getInput("2017Task10Input.txt");
 		String line = input.get(0);
 
-		String[] rawLengths = line.split(",");
-		int[] lengths = Arrays.stream(rawLengths).mapToInt(Integer::parseInt).toArray();
+		// part 1
+		int[] lengths = parseInputToLengths(line, 1);
+		List<Integer> list = IntStream.rangeClosed(0, 255).boxed().collect(Collectors.toList());
 
+		list = doRound(lengths, list, 1);
+		List<Integer> subList = list.subList(0, 2);
+		output.add("### PART " + 1 + " ###");
+		output.add("first two numbers: " + subList);
+		output.add("product: " + list.get(0) * list.get(1));
+
+		// part 2
+		lengths = parseInputToLengths(line, 2);
+		list = IntStream.rangeClosed(0, 255).boxed().collect(Collectors.toList());
+
+		list = doRound(lengths, list, 64);
+		List<Integer> denseHash = getDenseHash(list);
+		String knotHash = getKnotHash(denseHash);
+
+		output.add("### Part 2 ###");
+		output.add("Sparse Hash: " + list);
+		output.add("Dense Hash: " + denseHash);
+		output.add("Knot Hash: " + knotHash);
+
+		System.out.println(output);
+	}
+
+	private String getKnotHash(List<Integer> denseHash) {
+		String knotHash = "";
+
+		for (Integer num : denseHash) {
+			String hex = Integer.toHexString(num);
+			if (hex.length() < 2) {
+				hex = "0" + hex;
+			}
+			knotHash += hex;
+		}
+
+		return knotHash;
+	}
+
+	private List<Integer> getDenseHash(List<Integer> sparseHash) {
+		List<Integer> denseHash = new ArrayList<Integer>(16);
+
+		for (int i = 0; i < 16; i++) {
+			int start = i * 16;
+			List<Integer> block = sparseHash.subList(start, start + 16);
+
+			int blockNumber = block.stream().reduce((a, b) -> (a ^ b)).get();
+			denseHash.add(blockNumber);
+		}
+
+		return denseHash;
+	}
+
+	private List<Integer> doRound(int[] lengths, List<Integer> list, int iterations) {
 		int skip = 0;
 		int position = 0;
 
-		List<Integer> list = IntStream.rangeClosed(0, 255).boxed().collect(Collectors.toList());
-		// List<Integer> list = IntStream.rangeClosed(0, 4).boxed().collect(Collectors.toList());
+		for (int i = 0; i < iterations; i++) {
+			for (int length : lengths) {
+				// printList(list, position, length);
 
-		for (int length : lengths) {
-			printList(list, position, length);
+				reverseNumbers(list, position, length);
 
-			reverseNumbers(list, position, length);
-
-			position = increaseAndWrap(position, length + skip++, list.size());
+				position = increaseAndWrap(position, length + skip++, list.size());
+			}
 		}
-		System.out.println(list);
-		List<Integer> subList = list.subList(0, 2);
-		System.out.println("first two numbers: " + subList);
-		System.out.println("product: " + list.get(0) * list.get(1));
+		return list;
+	}
+
+	private int[] parseInputToLengths(String line, int part) {
+		String[] rawLengths;
+		int[] lengths;
+
+		if (part == 1) {
+			rawLengths = line.split(",");
+			lengths = Arrays.stream(rawLengths).mapToInt(Integer::parseInt).toArray();
+		} else {
+			int chars = line.length();
+			lengths = new int[chars + 5];
+			byte[] bytes = line.getBytes();
+			for (int i = 0; i < bytes.length; i++) {
+				lengths[i] = bytes[i];
+			}
+			int[] suffix = new int[] { 17, 31, 73, 47, 23 };
+			for (int i = 0; i < suffix.length; i++) {
+				lengths[bytes.length + i] = suffix[i];
+			}
+		}
+		return lengths;
 	}
 
 	private void printList(List<Integer> list, int position, int length) {

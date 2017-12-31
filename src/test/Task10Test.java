@@ -22,6 +22,8 @@ public class Task10Test {
 		assertEquals(3, task.increaseAndWrap(1, 2, 4));
 		assertEquals(2, task.increaseAndWrap(3, 4, 5));
 		assertEquals(3, task.increaseAndWrap(4, 6, 7));
+
+		System.out.println(0b00000011 ^ 0b00000010);
 	}
 
 }
